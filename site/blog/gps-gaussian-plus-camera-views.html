@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GPS-Gaussian+ 学习笔记：固定机位如何影响实时三维直播</title>
+    <meta name="description" content="从 GPS-Gaussian+ 和 Gaussian Splatting 出发，记录固定摄像头视角约束对实时三维直播的影响。">
+    <link rel="stylesheet" href="../styles/main.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html">藤上的丝瓜</a>
+      <nav class="nav-links" aria-label="博客导航">
+        <a href="../index.html">首页</a>
+        <a href="#references">参考</a>
+        <a href="https://github.com/only-1-luffa" target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="article-shell">
+      <article class="article">
+        <header class="article-header">
+          <p class="eyebrow">3DV Learning Note</p>
+          <h1>GPS-Gaussian+ 学习笔记：固定机位如何影响实时三维直播</h1>
+          <p class="article-meta">作者：高司晨 / 藤上的丝瓜 · 2026-05-16</p>
+          <p class="lead">
+            我关注 GPS-Gaussian+，是因为我希望探索如何利用已有固定摄像头设备，实现更接近实时的三维直播。相比单纯离线重建，我更关心设备条件有限、输入视角不完美时，系统能否稳定、高效地产生可用的三维表示。
+          </p>
+        </header>
+
+        <figure class="article-figure">
+          <img src="../assets/images/gaussian-field.png" alt="固定摄像头与三维高斯点云的抽象示意图">
+          <figcaption>固定机位会决定哪些区域被充分观测，也会决定哪些区域需要方法本身去补足。</figcaption>
+        </figure>
+
+        <section>
+          <h2>1. 为什么从固定摄像头出发</h2>
+          <p>
+            很多三维重建或新视角合成实验会假设我们能围绕目标采集比较完整的多视角数据。但如果目标变成实时三维直播，采集条件就会现实很多：摄像头通常已经安装在教室、实验室或室内空间的少数几个固定位置，机位会受到墙面、供电、网络布线、安装成本和隐私区域等因素限制。
+          </p>
+          <p>
+            这类场景的吸引力也正在这里。它不要求重新购买复杂设备，而是希望把已有摄像头组织起来，形成一个可以更新、可以渲染、可以从新视角观察的三维表达。问题是，固定机位天然不是为三维重建最优化设计的，所以算法必须面对输入视角不均匀、遮挡区域多、局部细节缺失的问题。
+          </p>
+        </section>
+
+        <section>
+          <h2>2. Gaussian Splatting 带来的机会</h2>
+          <p>
+            3D Gaussian Splatting 的重要吸引力在于，它把场景表示成一组带有位置、形状、颜色和透明度等属性的三维高斯，并通过适合 GPU 的 splatting 过程进行高质量实时渲染。对实时三维直播来说，这种表示比传统网格或体渲染更容易让人联想到“持续更新的场景状态”。
+          </p>
+          <p>
+            但是，Gaussian Splatting 并不会自动消除输入视角的限制。高斯的位置、密度和外观仍然依赖观测数据。如果固定摄像头只覆盖了正面和少量侧面，那么背面、桌面遮挡处、人体或物体互相遮挡的位置，就很容易变成表示不稳定的区域。
+          </p>
+        </section>
+
+        <section>
+          <h2>3. 我理解的相机机位局限性</h2>
+          <p>
+            我理解的相机机位局限性，主要来自固定摄像头场景中的视角覆盖不均。比如在教室、实验室或室内空间中，摄像头通常被安装在少数几个固定位置，输入和论文实验中常见的密集、多角度采集不同：它可能在某些方向有稳定观测，但在侧面、背面、遮挡区域或局部细节上缺少足够视角。
+          </p>
+          <p>
+            对 Gaussian Splatting 这类依赖多视角观测来优化三维表示的方法来说，固定机位会影响 Gaussian 的初始化、密度分布、遮挡区域补全和新视角合成质量。如果某个区域长期没有被任何相机看到，方法不可能凭空恢复真实几何；如果某些视角的位姿估计有误，错误也可能被写入三维表示。
+          </p>
+          <p>
+            对实时三维直播而言，这个问题会进一步放大。系统不能依赖长时间离线训练，也不能要求用户反复移动设备补充视角，而是需要在有限固定视角下快速更新场景表示。这让我觉得，固定机位不是一个可以忽略的输入条件，而应该成为算法设计时被显式考虑的约束。
+          </p>
+        </section>
+
+        <section>
+          <h2>4. 从 GPS-Gaussian+ 得到的启发</h2>
+          <p>
+            GPS-Gaussian+ 的论文题目是 Generalizable Pixel-wise 3D Gaussian Splatting for Real-time Human-Scene Rendering from Sparse Views。仅从这个任务设定就可以看到，它关心的是 sparse views 和 real-time rendering，而不是在理想采集条件下做完全离线的单场景优化。
+          </p>
+          <p>
+            我对它的理解是：这类方法的价值不只是“把渲染效果做得更好”，也在于把问题推进到更接近实际部署的输入条件。固定摄像头三维直播和 sparse-view human-scene rendering 并不完全等价，但二者共享一个关键困难：观测不完整时，系统如何仍然构建足够稳定的三维表示，并让新视角结果看起来可信。
+          </p>
+          <p>
+            这给我的启发是，后续如果要面向已有设备做实时三维直播，不能只看渲染速度，还要同时关注机位分布、每个视角的信息量、位姿可靠性和局部更新策略。否则系统可能在正面视角看起来不错，一旦切换到新的观察角度，就暴露出遮挡区域和视角缺口。
+          </p>
+        </section>
+
+        <section>
+          <h2>5. 可能的优化方向</h2>
+          <div class="idea-list">
+            <article>
+              <h3>视角权重分配</h3>
+              <p>不同摄像头对不同空间区域的贡献不应完全相同。可以根据可见性、视角夹角、距离和遮挡情况，为局部区域分配更合理的观测权重。</p>
+            </article>
+            <article>
+              <h3>摄像头布局评估</h3>
+              <p>在设备安装前，可以用覆盖率、重叠视野和盲区比例评估机位。如果设备已经固定，也可以反过来估计哪些区域最容易产生重建不稳定。</p>
+            </article>
+            <article>
+              <h3>位姿校正</h3>
+              <p>固定机位并不代表位姿永远准确。长期使用中摄像头可能发生轻微偏移，因此需要结合图像观测或场景约束做持续校正。</p>
+            </article>
+            <article>
+              <h3>局部增量更新</h3>
+              <p>实时直播不适合每一帧都从头优化。更现实的方式是识别发生变化的区域，只对局部高斯表示进行更新。</p>
+            </article>
+            <article>
+              <h3>多源信息补充</h3>
+              <p>如果 RGB 视角不足，可以考虑深度、人体先验、场景先验或时间连续性来补充约束，但也要避免让先验覆盖真实观测。</p>
+            </article>
+          </div>
+        </section>
+
+        <section>
+          <h2>6. 小结</h2>
+          <p>
+            通过阅读 GPS-Gaussian+ 相关内容，我更明确地意识到：固定机位实时三维直播不是单纯追求更漂亮的重建结果，而是在有限观测条件下尽快得到稳定、可用、可更新的三维表示。相机摆放、视角覆盖和位姿可靠性会直接影响算法上限，因此它们不只是工程部署问题，也应该进入三维表示方法本身的设计视野。
+          </p>
+        </section>
+
+        <section id="references" class="references">
+          <h2>参考资料</h2>
+          <ul>
+            <li><a href="https://arxiv.org/abs/2411.11363" target="_blank" rel="noreferrer">GPS-Gaussian+: Generalizable Pixel-wise 3D Gaussian Splatting for Real-time Human-Scene Rendering from Sparse Views</a></li>
+            <li><a href="https://foruck.github.io/GPS-Gaussian/" target="_blank" rel="noreferrer">GPS-Gaussian / GPS-Gaussian+ Project Page</a></li>
+            <li><a href="https://github.com/aipixel/GPS-Gaussian" target="_blank" rel="noreferrer">GPS-Gaussian Official GitHub Repository</a></li>
+            <li><a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noreferrer">3D Gaussian Splatting for Real-Time Radiance Field Rendering</a></li>
+          </ul>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <p><a href="../index.html">返回首页</a></p>
+      <p>© 2026 高司晨 · 藤上的丝瓜</p>
+    </footer>
+  </body>
+</html>
+

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>高司晨 | 藤上的丝瓜</title>
+    <meta name="description" content="高司晨的个人主页，记录 3D Vision、Gaussian Splatting、算法学习和 AI Agent 辅助开发。">
+    <link rel="stylesheet" href="styles/main.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html">藤上的丝瓜</a>
+      <nav class="nav-links" aria-label="主导航">
+        <a href="#focus">方向</a>
+        <a href="#notes">记录</a>
+        <a href="blog/gps-gaussian-plus-camera-views.html">博客</a>
+        <a href="https://github.com/only-1-luffa" target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Personal Homepage · Algorithm Foundations</p>
+          <h1>高司晨</h1>
+          <p class="nickname">藤上的丝瓜</p>
+          <p class="lead">
+            我正在关注 3D Vision、Computer Graphics 与 Gaussian Splatting，最近的兴趣集中在固定摄像头条件下的实时三维直播与场景表达。
+          </p>
+          <div class="hero-actions" aria-label="主要链接">
+            <a class="button primary" href="blog/gps-gaussian-plus-camera-views.html">阅读第一篇博客</a>
+            <a class="button secondary" href="https://github.com/only-1-luffa" target="_blank" rel="noreferrer">GitHub: only-1-luffa</a>
+          </div>
+        </div>
+        <figure class="hero-visual">
+          <img src="assets/images/gaussian-field.png" alt="由固定摄像头视角与三维高斯点云构成的抽象技术图像">
+          <figcaption>Fixed cameras · Sparse views · Gaussian field</figcaption>
+        </figure>
+      </section>
+
+      <section class="section about" aria-labelledby="about-title">
+        <div class="section-heading">
+          <p class="eyebrow">About</p>
+          <h2 id="about-title">当前关注</h2>
+        </div>
+        <p>
+          我希望从已有设备出发，理解多个固定摄像头如何支持更接近实时的三维直播。相比只追求离线重建效果，我更关心视角受限、遮挡明显、采集时间有限时，系统能否快速得到稳定、可更新的三维表示。
+        </p>
+      </section>
+
+      <section class="section" id="focus" aria-labelledby="focus-title">
+        <div class="section-heading">
+          <p class="eyebrow">Focus</p>
+          <h2 id="focus-title">学习与技术兴趣</h2>
+        </div>
+        <div class="grid cards">
+          <article class="card">
+            <h3>3D Vision</h3>
+            <p>关注多视角几何、场景表示和新视角合成中输入视角与重建质量之间的关系。</p>
+          </article>
+          <article class="card">
+            <h3>Gaussian Splatting</h3>
+            <p>学习 3DGS 及其扩展方法，理解三维高斯表示如何兼顾表达能力与实时渲染效率。</p>
+          </article>
+          <article class="card">
+            <h3>Camera Constraints</h3>
+            <p>思考固定机位、稀疏视角、位姿误差和遮挡区域对三维直播系统的影响。</p>
+          </article>
+          <article class="card">
+            <h3>AI-assisted Development</h3>
+            <p>使用 AI Agent 辅助搭建网页、整理技术笔记，并通过测试和人工检查控制生成内容质量。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="notes" aria-labelledby="notes-title">
+        <div class="section-heading">
+          <p class="eyebrow">Records</p>
+          <h2 id="notes-title">学习记录</h2>
+        </div>
+        <div class="timeline">
+          <article class="timeline-item">
+            <span>01</span>
+            <div>
+              <h3>GPS-Gaussian+ 阅读与思考</h3>
+              <p>围绕 sparse views、generalizable Gaussian Splatting 和实时 human-scene rendering，整理固定摄像头场景下的个人理解。</p>
+            </div>
+          </article>
+          <article class="timeline-item">
+            <span>02</span>
+            <div>
+              <h3>算法基础课程学习</h3>
+              <p>继续补足算法与数据结构基础，把状态建模、复杂度分析和问题拆解能力迁移到图形学与三维视觉问题中。</p>
+            </div>
+          </article>
+          <article class="timeline-item">
+            <span>03</span>
+            <div>
+              <h3>AI Agent 辅助开发</h3>
+              <p>通过需求讨论、计划拆分、静态页面实现和验收脚本，体验更完整的 AI 编程流程。</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section blog-entry" aria-labelledby="blog-title">
+        <div class="section-heading">
+          <p class="eyebrow">Blog</p>
+          <h2 id="blog-title">第一篇技术博客</h2>
+        </div>
+        <article class="featured-post">
+          <div>
+            <p class="post-tag">3DV · Gaussian Splatting · Real-time 3D Streaming</p>
+            <h3>GPS-Gaussian+ 学习笔记：固定机位如何影响实时三维直播</h3>
+            <p>
+              这篇博客从“已有固定摄像头设备能否支持实时三维直播”的动机出发，讨论稀疏视角、相机机位和遮挡如何影响 Gaussian Splatting 类方法的场景表达。
+            </p>
+          </div>
+          <a class="button primary" href="blog/gps-gaussian-plus-camera-views.html">进入博客</a>
+        </article>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© 2026 高司晨 · 藤上的丝瓜</p>
+      <a href="https://github.com/only-1-luffa" target="_blank" rel="noreferrer">github.com/only-1-luffa</a>
+    </footer>
+  </body>
+</html>
+
