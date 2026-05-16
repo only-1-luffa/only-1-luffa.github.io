@@ -33,6 +33,7 @@
 - Gaussian Splatting 对实时三维表达的意义。
 - 固定机位带来的视角覆盖不均、遮挡和位姿误差问题。
 - 从 GPS-Gaussian+ 的 sparse-view 和 real-time human-scene rendering 设定中得到的启发。
+- 目前已有相机系统与官方实验设定存在不匹配，需要继续优化相机参数适配、位姿校正和算法流程。
 - 可能的优化方向，包括视角权重分配、摄像头布局评估、位姿校正、局部增量更新和多源信息补充。
 
 博客访问方式：从主页的“阅读第一篇博客”或“进入博客”按钮进入。博客链接为 `https://only-1-luffa.github.io/blog/gps-gaussian-plus-camera-views.html`。
