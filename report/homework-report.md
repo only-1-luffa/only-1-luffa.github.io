@@ -21,7 +21,7 @@
 - 学习记录：记录 GPS-Gaussian+ 阅读、算法基础课程学习和 AI Agent 辅助开发过程。
 - 博客入口：从主页直接跳转到本次作业完成的第一篇技术博客。
 
-主页访问链接：部署到 GitHub Pages 后填写，例如 `https://only-1-luffa.github.io/`。本项目已准备 GitHub Pages Actions 工作流，推送到 GitHub 后可发布 `site/` 目录中的静态网页。
+主页访问链接：`https://only-1-luffa.github.io/`。本项目已准备 GitHub Pages Actions 工作流，推送到 GitHub 后可发布 `site/` 目录中的静态网页。
 
 ## 2. 博客内容介绍
 
@@ -35,7 +35,7 @@
 - 从 GPS-Gaussian+ 的 sparse-view 和 real-time human-scene rendering 设定中得到的启发。
 - 可能的优化方向，包括视角权重分配、摄像头布局评估、位姿校正、局部增量更新和多源信息补充。
 
-博客访问方式：从主页的“阅读第一篇博客”或“进入博客”按钮进入。部署后链接形式为 `https://only-1-luffa.github.io/blog/gps-gaussian-plus-camera-views.html`。
+博客访问方式：从主页的“阅读第一篇博客”或“进入博客”按钮进入。博客链接为 `https://only-1-luffa.github.io/blog/gps-gaussian-plus-camera-views.html`。
 
 ## 3. 实现过程
 
