@@ -21,7 +21,7 @@
 - 学习记录：记录 GPS-Gaussian+ 阅读、算法基础课程学习和 AI Agent 辅助开发过程。
 - 博客入口：从主页直接跳转到本次作业完成的第一篇技术博客。
 
-主页访问链接：部署到 GitHub Pages 后填写，例如 `https://only-1-luffa.github.io/`。
+主页访问链接：部署到 GitHub Pages 后填写，例如 `https://only-1-luffa.github.io/`。本项目已准备 GitHub Pages Actions 工作流，推送到 GitHub 后可发布 `site/` 目录中的静态网页。
 
 ## 2. 博客内容介绍
 
@@ -48,7 +48,7 @@
 3. 确定网站结构，包括 `index.html`、博客页面、样式文件和项目说明文件。
 4. 编写验收脚本 `tests/site_checks.py`，检查必需文件、主页到博客的跳转、博客返回首页链接、GitHub 链接和响应式样式。
 5. 编写首页和博客页面，并使用统一 CSS 控制排版、卡片、按钮和响应式布局。
-6. 准备部署到 GitHub Pages，推荐仓库名为 `only-1-luffa.github.io`。
+6. 准备部署到 GitHub Pages，推荐仓库名为 `only-1-luffa.github.io`。仓库中的 `.github/workflows/pages.yml` 会把 `site/` 目录发布为网页内容。
 
 ## 4. AI Agent 使用说明
 
