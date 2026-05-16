@@ -30,6 +30,7 @@ body {
   color: var(--text);
   font-size: 16px;
   line-height: 1.75;
+  overflow-x: hidden;
 }
 
 a {
@@ -104,6 +105,13 @@ main {
   align-items: center;
   gap: 56px;
   padding: 28px 0 52px;
+}
+
+.hero-copy,
+.hero-visual,
+.article,
+.article-figure {
+  min-width: 0;
 }
 
 .eyebrow,
@@ -371,12 +379,43 @@ h3 {
   margin-top: 8px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
+  .site-header,
+  .site-footer,
+  main {
+    width: 100%;
+    max-width: 390px;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
   .hero {
     min-height: auto;
     grid-template-columns: 1fr;
     gap: 32px;
     padding-top: 38px;
+  }
+
+  .article-header h1 {
+    max-width: 100%;
+    font-size: clamp(1.8rem, 8vw, 2.25rem);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+    word-break: break-all;
+    white-space: normal;
+  }
+
+  .lead {
+    max-width: 340px;
+    font-size: 1rem;
+  }
+
+  .article p {
+    max-width: 320px;
+    overflow-wrap: anywhere;
+    word-break: break-all;
   }
 
   .cards {
@@ -389,10 +428,9 @@ h3 {
 }
 
 @media (max-width: 640px) {
-  .site-header,
-  .site-footer,
-  main {
-    width: min(100% - 28px, 1120px);
+  html,
+  body {
+    max-width: 100%;
   }
 
   .site-header {
@@ -409,6 +447,19 @@ h3 {
 
   .nav-links a {
     padding-inline: 9px;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 13vw, 3.5rem);
+  }
+
+  .hero-copy,
+  .article-header,
+  .article section,
+  .article p,
+  .about p,
+  .section > p {
+    max-width: 100%;
   }
 
   .cards,
@@ -428,4 +479,3 @@ h3 {
     flex-direction: column;
   }
 }
-
